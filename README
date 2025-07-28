@@ -1,0 +1,17 @@
+Implementare API OpenAI intr o aplicatie web folosind Django 
+
+1. Am creat o pagina unde poti incarca un fisier(deocamdata pdf sau txt)
+2. Am creat o clasa fileForm pentru a stoca fisierul respectiv in variabila file 
+3. In views.py am creat o functie uploadFile care va fi apelata de fiecare data cand accesam path-ul upload/
+4. In functia uploadFile daca requestul este de tip POST, iar formularul este valid se va apela functia handle_file din utils.py
+5. handle_file verifica extensia fisierului incarcat:
+    a. Daca fisierul este de tip .txt il vom citi direct folosind file.chunks() pentru a nu supraincarca serverul in cazul fisierelor mari
+    b. Daca fisierul este de tip .pdf atunci vom copia mai intai fisierul in sistem pentru a putea folosi convert_from_path, apoi vom converti pdf-ul in imagini din care vom extrage textul
+6.Odata extrasa informatia din fisier aceasta este stocata in variabila text care poate fi folosita ca input pentru OpenAI
+
+Ce functii mai trebuie implementate:
+1.Homepage pentru utilizator:
+    a.Functie de incarcare a documentelor care vor fi stocate sub forma de text in baza de date
+    b.Functie pentru a da instructiuni AI-ului si alte customizari
+    c.O pagina unde poti vedea ce documente ai incarcat, putand ulterior sa le stergi/modifici
+2.Memorie pentru AI

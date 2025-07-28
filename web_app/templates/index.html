@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Homepage</title>
+        <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <style>
+            body{
+                display: flex;
+                justify-content: center;
+                background: #2e2e6b;
+                background: linear-gradient(90deg,rgba(46, 46, 107, 1) 0%, rgba(48, 22, 97, 1) 20%, rgba(10, 0, 20, 1) 100%);
+                font-family:"Poppins";
+            }
+            #main{
+                width:600px;
+                text-align: center;
+            }
+            #header{
+                white-space: pre;
+            }
+            #header span {
+                transition: color 0.3s ease, text-shadow 0.3s ease;
+                display: inline-block;
+            }
+            .shine {
+                color: #f9f9f8;
+                text-shadow: 0 0 10px #ededda, 0 0 20px rgb(239, 239, 233);
+                transform: scale(1.03);
+            }
+            #button-div{
+                position:relative;
+                top:150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top:150px;
+            }
+            #button-div > button{
+                width:300px;
+                height:80px;
+                font-size:1.5rem;
+                font-family:"Poppins";
+                border:none;
+                border-radius:35px;
+                margin:8px;
+                color:white;
+            }
+            #login-button{
+                display: inline-block;
+                background-color: white;
+                transition: transform 0.3s ease-in-out, color 1s ease-in-out;
+            }
+            #register-button{
+                display: inline-block;
+                background-color: #ffbe0b;
+                transition: transform 0.3s ease-in-out;
+            }
+            #button-div > button:hover{
+                transform: scale(1.05);
+                cursor: pointer;
+            }
+            .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            box-shadow: 0 0 5px 1px white;
+            pointer-events: none;
+            animation: twinkle 3s infinite alternate;
+            }
+
+            @keyframes twinkle {
+            0%   { opacity: 0.8; }
+            100% { opacity: 0.2; }
+            }
+        </style>
+        <script>
+            function selectLetters(){
+                const h1 = document.getElementById("header");
+                const text = h1.textContent;
+                h1.innerHTML="";
+                for(let i = 0; i < text.length; i++){
+                    const span = document.createElement("span");
+                    span.textContent = text[i];
+                    h1.appendChild(span);
+                }
+            }
+            function waveShine() {
+            const spans = document.querySelectorAll("#header span");
+            let delay = 0;
+            spans.forEach((span, index) => {
+                setTimeout(() => {
+                span.classList.add("shine");
+                setTimeout(() => {
+                span.classList.remove("shine");
+                }, 400);
+            }, delay);
+            delay += 50; 
+            });
+        }
+        function createStars(numStars) {
+            const body = document.body;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+    
+            for(let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = Math.random() * width + 'px';
+                star.style.top = Math.random() * height + 'px';
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                body.appendChild(star);
+            }
+            }
+            window.onload = function () {
+                createStars(100);
+                selectLetters();
+                waveShine();
+                setInterval(waveShine,5000);
+            };
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            <h1 id="header" style="font-weight: 500;color:white;font-size: 50px;">AI Personal Assistant</h1>
+            <div id="button-div">
+                <button id="login-button" onclick="window.location.href='/login/';" style="color:black;">Log In</button>
+                <button id="register-button" onclick="window.location.href='/register/';">Register</button>
+            </div>
+            
+        </div>
+    </body>
+</html>
