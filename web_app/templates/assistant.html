@@ -7,6 +7,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <style>
             body{
                 display: flex;
@@ -136,9 +137,17 @@
                     body.appendChild(star);
                 }
             }
-            window.onload = function() {
-                createStars(100);
-            };
+            function displayLoading(id) {
+                const div = document.getElementById(id);
+                let dotCount = 0;
+                if (div.loadingInterval) {
+                    clearInterval(div.loadingInterval);
+                }
+                div.loadingInterval = setInterval(() => {
+                    dotCount = (dotCount + 1) % 4;
+                    div.innerHTML = "Loading" + ".".repeat(dotCount);
+                }, 500);
+            }
         </script>
     </head>
     <body>
@@ -146,7 +155,7 @@
             <h1>AI Assistant</h1>
             <div id="messages">
                 <div id="response"></div>
-                <form  hx-post="{% url 'uploadFile' %}" hx-on="htmx:beforeRequest: clearInput('id_question')" hx-target="#response" hx-swap="innerHTML" method="post" enctype="multipart/form-data">
+                <form  hx-post="{% url 'assistant' %}" hx-on="htmx:beforeRequest: clearInput('id_question')" hx-target="#response" hx-swap="innerHTML" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div id="message-bar">{{ form.question }}<button id="submit-button" type="submit"><img src="{% static 'send.png' %}" id="send-logo"></button></div>
                     {{ form.file }}
