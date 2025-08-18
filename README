@@ -8,10 +8,4 @@ Implementare API OpenAI intr o aplicatie web folosind Django
     a. Daca fisierul este de tip .txt il vom citi direct folosind file.chunks() pentru a nu supraincarca serverul in cazul fisierelor mari
     b. Daca fisierul este de tip .pdf atunci vom copia mai intai fisierul in sistem pentru a putea folosi convert_from_path, apoi vom converti pdf-ul in imagini din care vom extrage textul
 6.Odata extrasa informatia din fisier aceasta este stocata in variabila text care poate fi folosita ca input pentru OpenAI
-
-Ce functii mai trebuie implementate:
-1.Homepage pentru utilizator:
-    a.Functie de incarcare a documentelor care vor fi stocate sub forma de text in baza de date
-    b.Functie pentru a da instructiuni AI-ului si alte customizari
-    c.O pagina unde poti vedea ce documente ai incarcat, putand ulterior sa le stergi/modifici
-2.Memorie pentru AI
+7.Deocamdata AI-ul nu are memorie
