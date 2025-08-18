@@ -1,9 +1,8 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
-from .forms import fileForm, loginForm,registerForm,questionForm
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password,check_password
-from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from .forms import fileForm, loginForm,registerForm,questionForm
 from .utils import handle_file,create_summary
 from .models import User,Files
 
@@ -19,11 +18,9 @@ def assistant(request):
         form = questionForm(request.POST)
         if form.is_valid():
             file_text = "There is no file at the moment"
-            answer = create_summary(file_text,form.cleaned_data['question'])
             files = Files.objects.filter(user=user)
             if files.exists():
                 file_text = "\n\n".join(f"{f.uploaded_file.name} : {f.file_content}" for f in files)
-
             answer = create_summary(file_text, form.cleaned_data['question'])
             return HttpResponse(f"<p>{answer}</p>")
     else:
@@ -47,16 +44,15 @@ def login(request):
         form = loginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]   
+            password = form.cleaned_data["password"]
             try:
                 user = User.objects.get(email=email)
                 if check_password(password,user.password_hash):
                     request.session['user_id'] = user.id
                     return redirect('/dashboard/')
-                else:
-                    messages.error(request,"Invalid Password")
+                messages.error(request,"Invalid Password")
             except User.DoesNotExist:
-                messages.error(request,"User not found")    
+                messages.error(request,"User not found")
     else:
         form = loginForm()
     return render(request,'login.html',{'form':form})
@@ -70,17 +66,15 @@ def dashboard(request):
         user_files = user.files.all()
     except ObjectDoesNotExist:
         return redirect('/login/')
-    
     if request.method == "POST":
         form = fileForm(request.POST,request.FILES)
         if form.is_valid():
             file_instance = form.save(commit=False)
             file_instance.file_content = handle_file(file_instance.uploaded_file)
             file_instance.user = user
-            file_instance.save()                  
+            file_instance.save()
             return redirect('/dashboard')
-    else:
-        form = fileForm()
+    form = fileForm()
     return render(request,'dashboard.html',{'user' : user, 'files' : user_files, 'form' : form})
 
 def delete_file(request,id):

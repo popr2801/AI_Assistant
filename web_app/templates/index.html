@@ -102,25 +102,7 @@
             delay += 50; 
             });
         }
-        function createStars(numStars) {
-            const body = document.body;
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-    
-            for(let i = 0; i < numStars; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                const size = Math.random() * 2 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = Math.random() * width + 'px';
-                star.style.top = Math.random() * height + 'px';
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                body.appendChild(star);
-            }
-            }
             window.onload = function () {
-                createStars(150);
                 selectLetters();
                 waveShine();
                 setInterval(waveShine,5000);
@@ -129,7 +111,7 @@
     </head>
     <body>
         <div id="main">
-            <h1 id="header" style="font-weight: 500;color:white;font-size: 50px;">AI Personal Assistant</h1>
+            <h1 id="header" style="font-weight: 500;color:white;font-size: 50px;">AI Assistant</h1>
             <div id="button-div">
                 <button id="login-button" onclick="window.location.href='/login/';" style="color:black;">Log In</button>
                 <button id="register-button" onclick="window.location.href='/register/';">Register</button>
