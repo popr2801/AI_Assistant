@@ -9,3 +9,9 @@ Implementare API OpenAI intr o aplicatie web folosind Django
     b. Daca fisierul este de tip .pdf atunci vom copia mai intai fisierul in sistem pentru a putea folosi convert_from_path, apoi vom converti pdf-ul in imagini din care vom extrage textul
 6.Odata extrasa informatia din fisier aceasta este stocata in variabila text care poate fi folosita ca input pentru OpenAI
 7.Deocamdata AI-ul nu are memorie
+
+Pentru a rula aplicatia:
+1. Instalezi django din terminal
+2. Intri in web_app/backend/demo
+3. Folosesti comanda python3 manage.py runserver
+4. Intri pe http://127.0.0.1:8000
